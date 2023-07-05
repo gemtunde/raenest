@@ -4,12 +4,12 @@ import './App.css'
 function App() {
   //const [balance, setBalance] = useState(0);
   const [amount, setAmount] = useState(0);
-  const [select, setSelectCur] = useState(0);
-  const [selectConverted, setSelectConverted] = useState(0);
-  //onst [amountConverted, setAmountConverted] = useState(0);
+  const [select, setSelectCur] = useState("");
+  const [selectConverted, setSelectConverted] = useState("");
 
-   //result of conversion
-  let sumConversion = 0 ;
+  //result of conversion
+  const [amountConverted, setAmountConverted] = useState(0);
+
   
 
   const currencyArr = [
@@ -22,12 +22,12 @@ function App() {
   //select source currency
  const handleSelect = (e) => {
   setSelectCur(e.target.value);
-  console.log(select)
+  console.log(e.target.value)
  }
   //select converted currency
  const handleSelectConverted = (e) => {
   setSelectConverted(e.target.value);
-  console.log(select)
+  console.log(e.target.value)
  }
 
   //input amount
@@ -37,16 +37,22 @@ function App() {
   }
 
   //currency conversion
-  
-  const handleConvert = (e) => {
-   return (
-     e.preventDefault()
-    //will use switch statement here
-    if (select === "NGN" && selectConverted === "USD"){
-      sumConversion = 0.5 * amount
-    // }
-    )
-     }
+   function handleConvert(e){
+    e.preventDefault();
+    //use switch statement here
+    if(select === "NGN" && selectConverted === "USD"){
+      //used dummy data as exchange rate
+      setAmountConverted(amount * 0.005) ; 
+    }
+    else if(select === "NGN" && selectConverted === "GBP"){
+      //used dummy data as exchange rate
+      setAmountConverted(amount * 0.09) ; 
+    }
+    else if(select === "NGN" && selectConverted === "EUR"){
+      //used dummy data as exchange rate
+      setAmountConverted(amount * 0.19) ; 
+    }
+   }
 
   return (
     <>
@@ -102,7 +108,7 @@ function App() {
               </div>
             </div>
             <div className="form-input">
-                <input type="text" className="form-amount" placeholder="amount" />
+                <input type="text" className="form-amount" placeholder="amount" value={amountConverted}/>
             </div>
             <button className="button">
               Convert
@@ -111,12 +117,11 @@ function App() {
         </div>
         <div className="side-container">
                 <h2>You are Converting: N{amount}.00</h2>
-                <h2>You will get: N{sumConversion}.00</h2>
+                <h2>You will get: N{amountConverted}.00</h2>
                 <h2>SOurce: NGN Wallet</h2>
         </div>
       </div>
     </>
   )
-}
 }
 export default App
